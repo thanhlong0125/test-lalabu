@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini App Form</title>
+    <script async src="https://t.me/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <h1>Submit your data</h1>
+    <form id="form">
+        <input type="text" id="name" placeholder="Enter your name" required><br>
+        <input type="email" id="email" placeholder="Enter your email" required><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // Ensure the Telegram Web App API is loaded
+        if (window.Telegram && window.Telegram.WebApp) {
+            const webApp = window.Telegram.WebApp;
+
+            // Handle form submission
+            document.getElementById('form').addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get the form data
+                const data = {
+                    payload: {
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                    },
+                    product: {
+                        title: "Test Product",
+                        description: "Product description",
+                        price: 10.99,
+                        currency: "USD",
+                    }
+                };
+
+                // Send the data to Telegram bot
+                webApp.sendData(JSON.stringify(data));
+            });
+        } else {
+            console.error('Telegram WebApp API is not available.');
+        }
+    </script>
+</body>
+</html>
